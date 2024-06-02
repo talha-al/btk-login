@@ -13,4 +13,8 @@ export class LoginService {
   register(body: any): Observable<any> {
     return this._http.post(this.registerUrl, body);
   }
+
+  login(body: any): Observable<any> {
+    return this._http.post(this.loginUrl, body);
+  }
 }

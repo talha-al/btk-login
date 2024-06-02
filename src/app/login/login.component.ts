@@ -1,12 +1,40 @@
 import { Component } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { LoginService } from '../login.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [],
+  imports: [MatFormFieldModule, MatInputModule, MatButtonModule, ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
 
+  loginFormGroup = new FormGroup({
+    email: new FormControl("", [Validators.required, Validators.email, Validators.minLength(6), Validators.maxLength(20)]),
+    password: new FormControl("", [Validators.minLength(5), Validators.required])
+  })
+
+  constructor(private _loginService: LoginService, private _router: Router) { }
+
+  loginForm() {
+    this._loginService.login(this.loginFormGroup.value).subscribe({
+      next: (res) => {
+        alert("Kayıt Başarılı!");
+        this._router.navigateByUrl("home");
+      },
+      error: (err) => {
+        alert("Giriş Yapılamadı!" + err);
+        this.loginFormGroup.reset();
+      },
+      complete: () => {
+        // Subscribe tamamandıktan sonra çalışır!!!
+      }
+    })
+  }
 }
