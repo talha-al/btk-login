@@ -5,6 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { LoginService } from '../login.service';
 import { Router } from '@angular/router';
+import { SubSink } from 'subsink';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,8 @@ import { Router } from '@angular/router';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-  
+  private _subSink = new SubSink();
+
   loginFormGroup = new FormGroup({
     email: new FormControl("", [Validators.required, Validators.email, Validators.minLength(6), Validators.maxLength(20)]),
     password: new FormControl("", [Validators.minLength(5), Validators.required]),
@@ -23,8 +25,12 @@ export class LoginComponent {
 
   constructor(private _loginService: LoginService, private _router: Router) { }
 
+  ngOnDestroy(){
+    this._subSink.unsubscribe();
+  }
+
   loginForm() {
-    this._loginService.login(this.loginFormGroup.value).subscribe({
+    this._subSink.sink = this._loginService.login(this.loginFormGroup.value).subscribe({
       next: (res) => {
         alert("Kayıt Başarılı!");
         this._loginService.setIsLogin("true");
