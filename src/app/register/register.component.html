@@ -1,0 +1,28 @@
+<div class="container">
+    <div class="left-side">
+        <img width="100%" height="500px" 
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrJBzpmHVlV-E5jKGtG4DVJI_Gnx93p7iN5g&s">
+    </div>
+
+    <div class="right-side" [formGroup]="registerFormGroup">
+        <h1>Register</h1>
+        <mat-form-field class="example-form-field">
+            <mat-label>Ad-Soyad</mat-label>
+            <input matInput type="text" formControlName="name">
+        </mat-form-field>
+
+        <mat-form-field class="example-form-field">
+            <mat-label>Mail</mat-label>
+            <input matInput type="email" formControlName="email">
+        </mat-form-field>
+
+        <mat-form-field class="example-form-field">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" formControlName="password">
+        </mat-form-field>
+
+        <button mat-flat-button color="primary" (click)="registerForm()">Kayıt Ol</button>
+
+
+    </div>
+</div>
