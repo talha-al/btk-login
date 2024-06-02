@@ -11,8 +11,6 @@ export class LoginService {
   constructor(private _http: HttpClient) { }
 
   register(body: any): Observable<any> {
-    console.log(body);
-    
     return this._http.post(this.registerUrl, body);
   }
 }
